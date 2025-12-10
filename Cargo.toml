@@ -1,0 +1,7 @@
+[package]
+name = "aoc25_rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Put shared dependencies here, e.g., itertools, regex
