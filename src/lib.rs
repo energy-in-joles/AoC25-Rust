@@ -19,6 +19,29 @@ pub fn cli_parse() -> AoCArgs {
     AoCArgs::parse()
 }
 
+pub fn run_main(
+    part1: fn(Box<dyn Iterator<Item = String>>) -> io::Result<()>,
+    part2: fn(Box<dyn Iterator<Item = String>>) -> io::Result<()>,
+) -> io::Result<()> {
+    let args = cli_parse();
+
+    let make_iter = || -> io::Result<Box<dyn Iterator<Item = String>>> {
+        Ok(Box::new(read_input_lines(args.s.clone())?))
+    };
+
+    match args.p {
+        Some(1) => part1(make_iter()?)?,
+        Some(2) => part2(make_iter()?)?,
+        None => {
+            part1(make_iter()?)?;
+            part2(make_iter()?)?;
+        }
+        Some(_) => println!("Invalid part number."),
+    }
+
+    Ok(())
+}
+
 pub fn read_input_lines(is_sample: bool) -> io::Result<impl Iterator<Item = String>> {
     let exe_path = env::current_exe()?; // temporary lives here
     let exe_name = exe_path

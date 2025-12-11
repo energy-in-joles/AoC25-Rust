@@ -1,6 +1,4 @@
-use aoc25_rust::cli_parse;
-use aoc25_rust::read_input_lines;
-use aoc25_rust::AoCArgs;
+use aoc25_rust::run_main;
 use std::io;
 
 const START_POSITION: i32 = 50;
@@ -21,23 +19,13 @@ fn parse_movement(s: &str) -> Option<i32> {
 }
 
 fn main() -> io::Result<()> {
-    let args = cli_parse();
-    match args.p {
-        Some(1) => part1(&args)?,
-        Some(2) => part2(&args)?,
-        None => {
-            part1(&args)?;
-            part2(&args)?;
-        }
-        Some(_) => println!("Invalid part number. Use 1 or 2."),
-    }
-    Ok(())
+    run_main(part1, part2)
 }
 
-fn part1(args: &AoCArgs) -> io::Result<()> {
+fn part1(line_reader: impl Iterator<Item = String>) -> io::Result<()> {
     let mut position = START_POSITION;
     let mut zero_count = 0;
-    for line in read_input_lines(args.s)? {
+    for line in line_reader {
         let movement = parse_movement(&line).expect("Failed to parse movement command");
         position += movement;
         if position % DIAL_RANGE == 0 {
@@ -63,16 +51,10 @@ fn count_zero_crossover(current_position: i32, movement: i32) -> i32 {
     q.abs()
 }
 
-// fn count_zero_crossover(current: i32, movement: i32) -> i32 {
-//     let start_div = current.div_euclid(DIAL_RANGE);
-//     let end_div = (current + movement).div_euclid(DIAL_RANGE);
-//     (end_div - start_div).abs()
-// }
-
-fn part2(args: &AoCArgs) -> io::Result<()> {
+fn part2(line_reader: impl Iterator<Item = String>) -> io::Result<()> {
     let mut position = START_POSITION;
     let mut crossover_count = 0;
-    for line in read_input_lines(args.s)? {
+    for line in line_reader {
         let movement = parse_movement(&line).expect("Failed to parse movement command");
         crossover_count += count_zero_crossover(position, movement);
         position = wrap_position(position + movement);
