@@ -6,9 +6,10 @@
 
 ```bash
 USAGE:
-cargo run --bin day01 -- [OPTIONS]
+cargo run --bin day<DD> -- [OPTIONS]
 
 OPTIONS:
+day<DD>               the day to run (e.g day01)
 -s, --sample          Use sample input
 -p, --part <1|2>      Which part to run (1 or 2)
 ```
