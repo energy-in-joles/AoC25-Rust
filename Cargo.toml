@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+clap = { version="4.5.53", features=["derive"] }
 # Put shared dependencies here, e.g., itertools, regex
