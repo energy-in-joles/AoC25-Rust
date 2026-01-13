@@ -81,6 +81,8 @@ fn part1(mut line_reader: impl Iterator<Item = String>) -> io::Result<()> {
             }
 
             // sum of arithmetic series
+            // each invalid ID can be expressed as K|K, which follows the general form K * (10^half_digits + 1)
+            // so we can factor out (10^half_digits + 1) and multiply it by arithmetic sum sum_halves = n * (a1 + an) / 2
             let sum_halves = (end_half - start_half + 1) * (start_half + end_half) / 2;
             invalid_id_sum += sum_halves * (10_u64.pow(half_digits) + 1);
         }
